@@ -6,7 +6,7 @@ This project includes the PyTorch implementations of the following papers✨:
 > 
 > Bang Yang, Yong Dai, Xuxin Cheng, Yaowei Li, Asif Raza, Yuexian Zou
 >
-> Project Page (comming soon), [[arXiv]](https://arxiv.org/abs/2401.17186)
+> Project Page (coming soon), [[arXiv]](https://arxiv.org/abs/2401.17186)
 
 
 > **ZeroNLG: Aligning and Autoencoding Domains for Zero-Shot Multimodal and Multilingual Natural Language Generation** (Accepted by TPAMI)
