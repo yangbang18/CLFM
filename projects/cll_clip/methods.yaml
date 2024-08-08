@@ -1,0 +1,127 @@
+########### Plugins ##########
+TEIR:
+  # Our Proposal: Token Embedding Initailization and Regularization
+  inherit_from: [_Our_Initialization, _Our_Regularization]
+_Our_Initialization:
+  new_vocab_mean_std: [-1, -1]
+_Our_Regularization:
+  regularize: True
+  regularize_type: grad_decay
+  grad_scale_type: current_reciprocal
+  weight_decay_scale_type: current_reciprocal
+  exclude_special_tokens: True
+
+######## Model Variants ########
+CLL_CLIP:
+  # Our Proposal: Continual Language Learning of CLIP
+  crosslingual_loss_scale: 1.0
+  crosslingual_loss_type: mse
+  crossmodal_loss_scale: 0.01
+  crossmodal_loss_type: contrastive
+  freeze_model: True
+  train_word_embs: True
+  dynamic_vocab: True
+  new_vocab_size: 10000
+  new_vocab_mean_std: [0, 0.02]
+CLL_CLIP_with_TEIR:
+  inherit_from: [CLL_CLIP, TEIR]
+JointTrain_CLL_CLIP:
+  inherit_from: CLL_CLIP
+  oracle_vocab: True
+  new_vocab_size: 200000
+
+oEWC:
+  inherit_from: CLL_CLIP
+  fisher_penalty_scale: 1000
+  fisher_gamma: 1
+oEWC_with_TEIR:
+  inherit_from: [oEWC, TEIR]
+
+ER:
+  inherit_from: CLL_CLIP
+  experience_replay: True
+  memory_size: 8000
+  balanced_sampling: True
+  double_batch_size: True
+ER_with_TEIR:
+  inherit_from: [ER, TEIR]
+  
+DER:
+  inherit_from: CLL_CLIP
+  experience_replay: True
+  dark_experience_replay: True
+  memory_size: 8000
+  balanced_sampling: True
+  double_batch_size: True
+DER_with_TEIR:
+  inherit_from: [DER, TEIR]
+
+MLA:
+  inherit_from: CLL_CLIP
+  adapter_config: repo:adapters/configs/MLA.json
+MLA_with_TEIR:
+  inherit_from: [MLA, TEIR]
+
+P_Tuning:
+  inherit_from: CLL_CLIP
+  adapter_config: prefix_tuning
+P_Tuning_with_TEIR:
+  inherit_from: [P_Tuning, TEIR]
+
+LoRA:
+  inherit_from: CLL_CLIP
+  adapter_config: lora
+LoRA_with_TEIR:
+  inherit_from: [LoRA, TEIR]
+
+DualPrompt:
+  inherit_from: CLL_CLIP
+  with_prompt: True
+  prompt_type: DualPrompt
+  prompt_config: default
+  pull_constraint_coeff: 1.0
+DualPrompt_with_TEIR:
+  inherit_from: [DualPrompt, TEIR]
+
+CodaPrompt:
+  inherit_from: CLL_CLIP
+  with_prompt: True
+  prompt_type: CodaPrompt
+  prompt_config: default
+CodaPrompt_with_TEIR:
+  inherit_from: [CodaPrompt, TEIR]
+
+##### Ablations of "CLL-CLIP with TEIR" #####
+# Ablations on TEIR & Oracle Vocab
+# CLL_CLIP is identical to CLL_CLIP_Oracle0_ID0_REG0
+# CLL_CLIP_with_TEIR is dentical to CLL_CLIP_Oracle0_ID1_REG1_gd
+CLL_CLIP_Oracle0_ID1_REG0:
+  inherit_from: [CLL_CLIP, _Our_Initialization]
+CLL_CLIP_Oracle0_ID0_REG1_g:
+  inherit_from: [CLL_CLIP, _Our_Regularization]
+  regularize_type: grad
+CLL_CLIP_Oracle0_ID0_REG1_d:
+  inherit_from: [CLL_CLIP, _Our_Regularization]
+  regularize_type: decay
+CLL_CLIP_Oracle0_ID0_REG1_gd:
+  inherit_from: [CLL_CLIP, _Our_Regularization]
+CLL_CLIP_Oracle1_ID1_REG1_gd:
+  inherit_from: CLL_CLIP_with_TEIR
+  oracle_vocab: True
+  new_vocab_size: 200000
+
+# Ablations on Trainable Components
+Ablation_trainAll:
+  inherit_from: CLL_CLIP_with_TEIR
+  freeze_model: False
+  no_shrink: True
+
+# Ablations on Training Objectives
+Ablation_onlyCrossModal:
+  inherit_from: CLL_CLIP_with_TEIR
+  crosslingual_loss_scale: 0
+  crossmodal_loss_scale: 1
+Ablation_onlyCrossLingual:
+  inherit_from: CLL_CLIP_with_TEIR
+  crosslingual_loss_scale: 1
+  crossmodal_loss_scale: 0

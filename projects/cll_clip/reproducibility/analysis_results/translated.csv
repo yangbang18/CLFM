@@ -1,0 +1,3 @@
+model,metric,ar,bn,cs,da,de,el,en,es,fa,fi,fil,fr,he,hi,hr,hu,id,it,ja,ko,mi,nl,no,pl,pt,quz,ro,ru,sv,sw,te,th,tr,uk,vi,zh,Average
+translate_test/zero_shot/openai_clip_B16,img_r1,0,0,0,0,0,0,0,0,0,0,0,0,44.3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1.2
+translate_test/zero_shot/openai_clip_B16,txt_r1,0,0,0,0,0,0,0,0,0,0,0,0,58.2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1.6

@@ -1,0 +1,8 @@
+{
+    "flat": false,
+    "prefix_length": 30,
+    "bottleneck_size": 512,
+    "non_linearity": "tanh",
+    "different_kv": false,
+    "use_ln": true
+}

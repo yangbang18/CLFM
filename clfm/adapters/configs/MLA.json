@@ -1,0 +1,12 @@
+{
+  "original_ln_before": true,
+  "original_ln_after": false,
+  "residual_before_ln": false,
+  "adapter_residual_before_ln": false,
+  "ln_before": false,
+  "ln_after": false,
+  "mh_adapter": false,
+  "output_adapter": true,
+  "non_linearity": "relu",
+  "reduction_factor": 2
+}

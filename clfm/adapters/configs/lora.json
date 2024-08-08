@@ -1,0 +1,10 @@
+{
+  "architecture": "lora",
+  "r": 8,
+  "alpha": 8,
+  "dropout": 0,
+  "attn_matrices": ["q", "v"],
+  "composition_mode": "add",
+  "init_weights": "lora",
+  "use_gating": false
+}
